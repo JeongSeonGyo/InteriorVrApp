@@ -47,7 +47,7 @@ public class SignupActivity extends AppCompatActivity {
                 try{
                     phpRequestSignup request = new phpRequestSignup("http://13.124.5.176/insertUser1.php");
                     String result = request.PhPtest(String.valueOf(Name.getText()),String.valueOf(ID.getText()),String.valueOf(Password.getText()));
-                    
+
                 }catch (MalformedURLException e){
                     e.printStackTrace();
                 }
