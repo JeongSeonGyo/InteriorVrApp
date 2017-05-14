@@ -11,18 +11,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.net.MalformedURLException;
+
 /**
  * Created by 쿄 on 2017.05.12 0012.
  */
 
 public class SignupActivity extends AppCompatActivity {
     Boolean validation = false;
+    private EditText Name, ID, Password;
+    private Button joinbtn;
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup);
+        NetworkUtil.setNetworkPolicy();
 
-        Button joinbtn = (Button) findViewById(R.id.join);
+        Name = (EditText)findViewById(R.id.newName);
+        ID = (EditText)findViewById(R.id.newID);
+        Password = (EditText)findViewById(R.id.newPw);
+
+
+        joinbtn = (Button) findViewById(R.id.join);
         Button cancelbtn = (Button) findViewById(R.id.cancel);
 
         //when you click join button
@@ -34,6 +44,15 @@ public class SignupActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v){
+                try{
+                    phpRequestSignup request = new phpRequestSignup("http://13.124.5.176/insertUser1.php");
+                    String result = request.PhPtest(String.valueOf(Name.getText()),String.valueOf(ID.getText()),String.valueOf(Password.getText()));
+                    
+                }catch (MalformedURLException e){
+                    e.printStackTrace();
+                }
+
+
                 if (newnameInput.getText().toString().length() == 0) {
                     Toast.makeText(SignupActivity.this, "Enter Name", Toast.LENGTH_LONG).show();
                     newnameInput.requestFocus();
