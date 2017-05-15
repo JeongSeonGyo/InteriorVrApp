@@ -20,9 +20,10 @@
         <activity android:name=".SignupActivity">
 
         </activity>
-</application>
+    </application>
 
-    <uses-permisiion android:name="android.permission.INTERNET"></uses-permisiion>
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+
 </manifest>
