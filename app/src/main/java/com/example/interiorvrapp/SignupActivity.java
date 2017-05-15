@@ -65,7 +65,7 @@ public class SignupActivity extends AppCompatActivity {
 
         });
 
-        //join button
+        //join
         joinbtn.setOnClickListener(new View.OnClickListener(){
             EditText newnameInput = (EditText) findViewById(R.id.newName);
             EditText newidInput = (EditText) findViewById(R.id.newID);

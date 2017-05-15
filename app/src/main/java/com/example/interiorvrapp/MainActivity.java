@@ -25,21 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //String test = "http://13.124.5.176/phpinfo.php";   //"http://localhost/MediumServer/SelectAllPost.php"
-        //URLConnector task = new URLConnector(test);
 
-        //task.start();
-/*
-        try{
-            task.join();
-            System.out.println("waiting... for result");
-        }catch(InterruptedException e){
-
-        }
-        String result = task.getResult();
-        System.out.println("Success");
-        System.out.println(result);
-*/
         idInput = (EditText) findViewById(R.id.ID);
         passwordInput = (EditText) findViewById(R.id.password);
         Button signupbtn = (Button) findViewById(R.id.Signupbtn);
