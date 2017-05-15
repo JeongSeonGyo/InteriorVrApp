@@ -21,6 +21,9 @@ public class SignupActivity extends AppCompatActivity {
     Boolean validation = false;
     private EditText Name, ID, Password;
     private Button joinbtn;
+    private Button checkbtn;
+    private boolean checkID = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -34,8 +37,35 @@ public class SignupActivity extends AppCompatActivity {
 
         joinbtn = (Button) findViewById(R.id.join);
         Button cancelbtn = (Button) findViewById(R.id.cancel);
+        checkbtn = (Button) findViewById(R.id.check);
 
-        //when you click join button
+        //ID check
+        checkbtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                try{
+                    phpRequestSignup request = new phpRequestSignup("http://13.124.5.176/insertUser2.php");
+                    String result = request.PhP_ID_check(String.valueOf(ID.getText()));
+                    result = result.substring(0,1);
+
+                    if(result.equals("0")){
+                        Toast.makeText(SignupActivity.this,"Try different ID",Toast.LENGTH_LONG).show();
+                        checkID = false;
+                        return;
+                    }
+                    else{
+                        Toast.makeText(SignupActivity.this,"Ok",Toast.LENGTH_LONG).show();
+                        checkID = true;
+                        return;
+                    }
+                }catch (MalformedURLException e){
+                    e.printStackTrace();
+                }
+            }
+
+        });
+
+        //join button
         joinbtn.setOnClickListener(new View.OnClickListener(){
             EditText newnameInput = (EditText) findViewById(R.id.newName);
             EditText newidInput = (EditText) findViewById(R.id.newID);
@@ -76,6 +106,12 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 }
 
+                if(checkID != true){
+                    Toast.makeText(SignupActivity.this,"Try different ID",Toast.LENGTH_LONG).show();
+                    newidInput.requestFocus();
+                    return;
+                }
+
                 //Check validation btw pw and pwchekck
                 if (!pwvalidation(newpwInput.getText().toString(), newpwcheckInput.getText().toString())) {
                         Toast.makeText(SignupActivity.this, "Retype your password", Toast.LENGTH_LONG).show();
@@ -84,7 +120,7 @@ public class SignupActivity extends AppCompatActivity {
                         return;
                     } else {
                         //db 저장
-                        Toast.makeText(SignupActivity.this, "Confirm", Toast.LENGTH_LONG).show();
+                       // Toast.makeText(SignupActivity.this, "Confirm", Toast.LENGTH_LONG).show();
                         Toast.makeText(SignupActivity.this, "Complete & Back to Login page", Toast.LENGTH_LONG).show();
                         finish();
                 }
