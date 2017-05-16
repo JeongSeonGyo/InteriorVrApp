@@ -77,4 +77,27 @@ public class phpRequestSignup{
             return null;
         }
     }
+
+    public String PhP_login_check(final String ID, final String Password) {
+        try {
+            String postData = "ID=" + ID +  "&" + "Password=" + Password ;
+            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.setRequestMethod("POST");
+            conn.setConnectTimeout(5000);
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            OutputStream outputStream = conn.getOutputStream();
+            outputStream.write(postData.getBytes("UTF-8"));
+            outputStream.flush();
+            outputStream.close();
+            String result = readStream(conn.getInputStream());
+            conn.disconnect();
+            return result;
+        }
+        catch (Exception e) {
+            Log.i("PHP Login Request", "request was failed.");
+            return null;
+        }
+    }
 }
