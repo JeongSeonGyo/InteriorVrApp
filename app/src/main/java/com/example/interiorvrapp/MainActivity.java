@@ -14,9 +14,11 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.net.MalformedURLException;
+
 public class MainActivity extends AppCompatActivity {
 
-    EditText idInput, passwordInput;
+    EditText IDInput, PWInput;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
     Boolean loginChecked;
@@ -26,13 +28,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        idInput = (EditText) findViewById(R.id.ID);
-        passwordInput = (EditText) findViewById(R.id.password);
+
+        IDInput = (EditText) findViewById(R.id.ID);
+        PWInput = (EditText) findViewById(R.id.password);
         Button signupbtn = (Button) findViewById(R.id.Signupbtn);
         Button loginbtn = (Button) findViewById(R.id.loginbtn);
 
-        String id = idInput.getText().toString();
-        String password = passwordInput.getText().toString();
+        String id = IDInput.getText().toString();
+        String password = PWInput.getText().toString();
 
         //when you click sign up button
         signupbtn.setOnClickListener(new View.OnClickListener(){
@@ -47,9 +50,51 @@ public class MainActivity extends AppCompatActivity {
 
         //when you click login
         loginbtn.setOnClickListener(new View.OnClickListener(){
+            private String result;
+            private boolean ID_OK=false;
+            private boolean PW_OK=false;
+            private phpRequestSignup request;
+
             @Override
             public void onClick(View v){
-                //go to vr
+                try{
+                    request = new phpRequestSignup("http://13.124.5.176/login.php");
+
+                }catch (MalformedURLException e){
+                    e.printStackTrace();
+                }
+                if (IDInput.getText().toString().length() == 0) {
+                    Toast.makeText(MainActivity.this, "Enter ID", Toast.LENGTH_LONG).show();
+                    IDInput.requestFocus();
+                    return;
+                }
+                else ID_OK = true;
+
+                if (PWInput.getText().toString().length() == 0) {
+                    Toast.makeText(MainActivity.this, "Enter Password", Toast.LENGTH_LONG).show();
+                    PWInput.requestFocus();
+                    return;
+                }
+                else PW_OK = true;
+
+                if(ID_OK == true && PW_OK == true) {
+                   // result = request.PhP_ID_check(String.valueOf(IDInput.getText()));
+                    result = request.PhP_login_check(String.valueOf(IDInput.getText()),String.valueOf(PWInput.getText()));
+                    // result = result.substring(0,1);
+                    System.out.println("result " + result);
+
+                    if (result.equals("0")) {
+                        Toast.makeText(MainActivity.this, "Try Again", Toast.LENGTH_LONG).show();
+                        return;
+                    } else {
+                        Toast.makeText(MainActivity.this, "Ok", Toast.LENGTH_LONG).show();
+                        Intent login = new Intent(getApplicationContext(), LoginActivity.class);
+                        startActivity(login);
+                    }
+                }
+
+                //go to login complete screen
+
             }
 
         });
