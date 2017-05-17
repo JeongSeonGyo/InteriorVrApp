@@ -18,7 +18,8 @@ import java.net.MalformedURLException;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText IDInput, PWInput;
+    private EditText IDInput, PWInput;
+    private Button signupbtn, loginbtn;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
     Boolean loginChecked;
@@ -27,15 +28,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        NetworkUtil.setNetworkPolicy();
 
         IDInput = (EditText) findViewById(R.id.ID);
-        PWInput = (EditText) findViewById(R.id.password);
-        Button signupbtn = (Button) findViewById(R.id.Signupbtn);
-        Button loginbtn = (Button) findViewById(R.id.loginbtn);
+        PWInput = (EditText) findViewById(R.id.Password);
+        signupbtn = (Button) findViewById(R.id.Signupbtn);
+        loginbtn = (Button) findViewById(R.id.loginbtn);
 
-        String id = IDInput.getText().toString();
-        String password = PWInput.getText().toString();
+//        String id = ID.getText().toString();
+//        String password = Password.getText().toString();
 
         //when you click sign up button
         signupbtn.setOnClickListener(new View.OnClickListener(){
@@ -50,43 +51,56 @@ public class MainActivity extends AppCompatActivity {
 
         //when you click login
         loginbtn.setOnClickListener(new View.OnClickListener(){
-            private String result;
+
             private boolean ID_OK=false;
             private boolean PW_OK=false;
-            private phpRequestSignup request;
+            EditText IDinput = (EditText)findViewById(R.id.ID);
+            EditText PWinput = (EditText)findViewById(R.id.Password);
+            public String result, equal;
+
 
             @Override
             public void onClick(View v){
                 try{
-                    request = new phpRequestSignup("http://13.124.5.176/login.php");
-
+                    phpRequestSignup request = new phpRequestSignup("http://13.124.5.176/login.php");
+                    result = request.PhP_login_check(String.valueOf(IDInput.getText()),String.valueOf(PWInput.getText()));
+                    //System.out.println(result);
                 }catch (MalformedURLException e){
                     e.printStackTrace();
                 }
-                if (IDInput.getText().toString().length() == 0) {
+
+                if (IDinput.getText().toString().length() == 0) {
                     Toast.makeText(MainActivity.this, "Enter ID", Toast.LENGTH_LONG).show();
-                    IDInput.requestFocus();
+                    IDinput.requestFocus();
                     return;
                 }
-                else ID_OK = true;
-
-                if (PWInput.getText().toString().length() == 0) {
+                //else ID_OK = true;
+                else if (PWinput.getText().toString().length() == 0) {
                     Toast.makeText(MainActivity.this, "Enter Password", Toast.LENGTH_LONG).show();
-                    PWInput.requestFocus();
+                    PWinput.requestFocus();
                     return;
                 }
-                else PW_OK = true;
+                //else PW_OK = true;
 
-                if(ID_OK == true && PW_OK == true) {
-                   // result = request.PhP_ID_check(String.valueOf(IDInput.getText()));
-                    result = request.PhP_login_check(String.valueOf(IDInput.getText()),String.valueOf(PWInput.getText()));
-                    // result = result.substring(0,1);
-                    System.out.println("result " + result);
+                else if(IDinput.getText().toString().length() != 0 && PWinput.getText().toString().length() != 0) {
 
-                    if (result.equals("0")) {
+                    System.out.println(result);
+                   // boolean com, com1;
+                   // com = result.equals("failure");
+                   // int i = Integer.parseInt(result);
+                    // System.out.println(i);
+                   // System.out.println(com);
+
+                    if (result == ("0")) {
                         Toast.makeText(MainActivity.this, "Try Again", Toast.LENGTH_LONG).show();
                         return;
-                    } else {
+
+                    }
+                    else if(result.equals("0")){
+                        Toast.makeText(MainActivity.this, "Try Again", Toast.LENGTH_LONG).show();
+                        return;
+                    }
+                    else {
                         Toast.makeText(MainActivity.this, "Ok", Toast.LENGTH_LONG).show();
                         Intent login = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(login);
