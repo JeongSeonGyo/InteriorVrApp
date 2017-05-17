@@ -20,11 +20,11 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:hint="ID"
-            android:layout_above="@+id/password"
-            android:layout_alignStart="@+id/password" />
+            android:layout_above="@+id/Password"
+            android:layout_alignStart="@+id/Password" />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/Password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
