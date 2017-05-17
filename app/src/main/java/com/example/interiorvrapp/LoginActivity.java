@@ -15,4 +15,11 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.login);
     }
 
+
+/**
+ * Created by 쿄 on 2017.05.15 0015.
+ */
+
+
+
 }
