@@ -55,6 +55,7 @@ public class phpRequestSignup{
         }
     }
 
+    //중복 확인
     public String PhP_ID_check(final String ID) {
         try {
             String postData = "ID=" + ID;
@@ -78,6 +79,7 @@ public class phpRequestSignup{
         }
     }
 
+    //ID, PW DB에서 체크
     public String PhP_login_check(final String ID, final String Password) {
         try {
             String postData = "ID=" + ID +  "&" + "Password=" + Password ;

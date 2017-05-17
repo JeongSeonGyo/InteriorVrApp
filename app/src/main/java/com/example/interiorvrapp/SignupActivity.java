@@ -18,10 +18,9 @@ import java.net.MalformedURLException;
  */
 
 public class SignupActivity extends AppCompatActivity {
-    Boolean validation = false;
+
     private EditText Name, ID, Password;
-    private Button joinbtn;
-    private Button checkbtn;
+    private Button joinbtn, checkbtn, cancelbtn;
     private boolean checkID = false;
 
     @Override
@@ -34,12 +33,11 @@ public class SignupActivity extends AppCompatActivity {
         ID = (EditText)findViewById(R.id.newID);
         Password = (EditText)findViewById(R.id.newPw);
 
-
         joinbtn = (Button) findViewById(R.id.join);
-        Button cancelbtn = (Button) findViewById(R.id.cancel);
+        cancelbtn = (Button) findViewById(R.id.cancel);
         checkbtn = (Button) findViewById(R.id.check);
 
-        //ID check
+        //ID 중복 확인 체크
         checkbtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -82,7 +80,6 @@ public class SignupActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
-
                 if (newnameInput.getText().toString().length() == 0) {
                     Toast.makeText(SignupActivity.this, "Enter Name", Toast.LENGTH_LONG).show();
                     newnameInput.requestFocus();
@@ -120,7 +117,6 @@ public class SignupActivity extends AppCompatActivity {
                         return;
                     } else {
                         //db 저장
-                       // Toast.makeText(SignupActivity.this, "Confirm", Toast.LENGTH_LONG).show();
                         Toast.makeText(SignupActivity.this, "Complete & Back to Login page", Toast.LENGTH_LONG).show();
                         finish();
                 }
@@ -130,7 +126,6 @@ public class SignupActivity extends AppCompatActivity {
         cancelbtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-
                 Toast.makeText(SignupActivity.this,"Cancel & Back to Login page",Toast.LENGTH_LONG).show();
                 finish();
             }
